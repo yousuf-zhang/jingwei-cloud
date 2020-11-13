@@ -1,0 +1,45 @@
+buildscript {
+    ext {
+        set("sparrowVersion", "2.0.0-SNAPSHOT")
+    }
+}
+plugins {
+    id 'com.vastmoon.sparrow' version "$sparrowVersion" apply false
+    id 'java'
+}
+
+description = "sparrow测试项目"
+group = 'com.vastmoon.example'
+version = '0.0.1-SNAPSHOT'
+repositories {
+    mavenLocal()
+    maven { url 'https://maven.aliyun.com/repository/public/' }
+    mavenCentral()
+    maven { url 'http://localhost:8081/repository/maven-public/' }
+}
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+test {
+    useJUnitPlatform()
+}
+apply plugin: "io.spring.dependency-management"
+dependencyManagement {
+    imports {
+        mavenBom "com.vastmoon.sparrow:sparrow-dependencies:$sparrowVersion"
+    }
+}
+apply plugin: "org.springframework.boot"
+dependencies {
+    implementation("com.vastmoon.sparrow:sparrow-core")
+    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+}

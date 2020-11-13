@@ -1,0 +1,69 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
+buildscript {
+    ext {
+        set("ignoreProjects",
+            [
+                project(":sparrow:sparrow-parent"),
+                project(":sparrow:sparrow-dependencies"),
+                project(":sparrow:sparrow-gradle-plugin"),
+            ]
+        )
+        set("moduleProjects", subprojects - ignoreProjects)
+        // 两方包 不能包含引用jar
+        set("excludeProjects", project(":sparrow:sparrow-client"))
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version "$springBootVersion" apply false
+    id 'io.spring.dependency-management' version "$dependencyManagementVersion" apply false
+    id 'java'
+}
+description = "sparrow(麻雀), 基础工程，通用工程骨架"
+allprojects {
+    group = 'com.vastmoon.sparrow'
+    version = '2.0.0-SNAPSHOT'
+}
+
+configure(moduleProjects) {
+    apply plugin: "java"
+    apply from: "${rootDir}/gradle/framework-module.gradle"
+    sourceCompatibility = '1.8'
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+    test {
+        useJUnitPlatform()
+    }
+}
+
+configure(moduleProjects - excludeProjects) {
+    apply plugin: "io.spring.dependency-management"
+    dependencyManagement {
+        imports {
+            mavenBom SpringBootPlugin.BOM_COORDINATES
+        }
+        generatedPomCustomization {
+            enabled = false
+        }
+    }
+
+    dependencies {
+        implementation(enforcedPlatform(project(":sparrow:sparrow-parent")))
+        annotationProcessor 'org.projectlombok:lombok'
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+        implementation("org.springframework.boot:spring-boot-starter-validation")
+        implementation("org.apache.commons:commons-collections4")
+        implementation("cn.hutool:hutool-all")
+        implementation("org.apache.commons:commons-lang3")
+        implementation("com.google.guava:guava")
+    }
+}
+

@@ -1,0 +1,20 @@
+buildscript {
+    ext {
+        set("springBootVersion", "2.3.4.RELEASE")
+        set("dependencyManagementVersion", "1.0.10.RELEASE")
+    }
+}
+description = "根目录用于管理所有项目"
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+allprojects {
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/public/' }
+        mavenCentral()
+        maven { url 'http://localhost:8081/repository/maven-public/' }
+    }
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+}

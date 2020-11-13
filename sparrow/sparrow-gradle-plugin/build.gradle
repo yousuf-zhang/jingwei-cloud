@@ -1,0 +1,18 @@
+plugins {
+    id "java-gradle-plugin"
+}
+apply from: "$rootDir/gradle/publications.gradle"
+dependencies {
+    implementation "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+    implementation "io.spring.gradle:dependency-management-plugin:$dependencyManagementVersion"
+}
+gradlePlugin {
+    plugins {
+        sparrowGradlePlugin {
+            //noinspection GroovyAssignabilityCheck
+            id = 'com.vastmoon.sparrow'
+            //noinspection GroovyAssignabilityCheck
+            implementationClass = 'com.vastmoon.sparrow.gradle.SparrowGradlePlugin'
+        }
+    }
+}

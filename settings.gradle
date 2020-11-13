@@ -1,0 +1,13 @@
+rootProject.name = 'jingwei-cloud'
+include 'sparrow'
+include 'sparrow:sparrow-parent'
+findProject(':sparrow:sparrow-parent')?.name = 'sparrow-parent'
+include 'sparrow:sparrow-dependencies'
+findProject(':sparrow:sparrow-dependencies')?.name = 'sparrow-dependencies'
+include 'sparrow:sparrow-core'
+findProject(':sparrow:sparrow-core')?.name = 'sparrow-core'
+include 'sparrow:sparrow-client'
+findProject(':sparrow:sparrow-client')?.name = 'sparrow-client'
+include 'sparrow:sparrow-gradle-plugin'
+findProject(':sparrow:sparrow-gradle-plugin')?.name = 'sparrow-gradle-plugin'
+

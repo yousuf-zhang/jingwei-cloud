@@ -1,0 +1,23 @@
+apply plugin: 'java-platform'
+apply from: "$rootDir/gradle/publications.gradle"
+javaPlatform {
+    allowDependencies()
+}
+dependencies {
+    api enforcedPlatform(project(":sparrow:sparrow-parent"))
+    constraints {
+        parent.moduleProjects.sort { it.name }.each {
+            api it
+        }
+    }
+}
+
+publishing {
+    publications {
+        //noinspection GroovyAssignabilityCheck
+        mavenJava(MavenPublication) {
+            //noinspection GroovyAssignabilityCheck
+            from components.javaPlatform
+        }
+    }
+}

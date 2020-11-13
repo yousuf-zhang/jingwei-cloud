@@ -1,0 +1,38 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
+apply plugin: 'java-platform'
+apply from: "$rootDir/gradle/publications.gradle"
+ext {
+    set('springCloudAlibabaVersion', "2.2.2.RELEASE")
+    set('springCloudVersion', "Hoxton.SR8")
+    set("collections4Version", "4.4")
+    set("hutoolVersion", "5.4.7")
+    set("ulisesbocchioVersion", "3.0.3")
+    set("springSecurityJwtVersion", "1.1.1.RELEASE")
+}
+javaPlatform {
+    allowDependencies()
+}
+
+dependencies {
+    api enforcedPlatform(SpringBootPlugin.BOM_COORDINATES)
+    api enforcedPlatform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
+    api enforcedPlatform("com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}")
+    constraints {
+        api("org.apache.commons:commons-collections4:$collections4Version")
+        api("cn.hutool:hutool-all:$hutoolVersion")
+        api("com.github.ulisesbocchio:jasypt-spring-boot:$ulisesbocchioVersion")
+        api('org.springframework.security:spring-security-jwt:$springSecurityJwtVersion')
+    }
+
+}
+
+publishing {
+    publications {
+        //noinspection GroovyAssignabilityCheck
+        mavenJava(MavenPublication) {
+            //noinspection GroovyAssignabilityCheck
+            from components.javaPlatform
+        }
+    }
+}

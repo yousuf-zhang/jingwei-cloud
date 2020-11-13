@@ -1,0 +1,25 @@
+apply from: "$rootDir/gradle/publications.gradle"
+jar {
+	manifest.attributes["Implementation-Title"] = project.name
+	manifest.attributes["Implementation-Version"] = project.version
+	manifest.attributes["Automatic-Module-Name"] = project.name.replace('-', '.')  // for Jigsaw
+	manifest.attributes["Created-By"] =
+			"${System.getProperty("java.version")} (${System.getProperty("java.specification.vendor")})"
+
+//	from("${rootDir}/src/docs/dist") {
+//		include "license.txt"
+//		include "notice.txt"
+//		into "META-INF"
+//		expand(copyright: new Date().format("yyyy"), version: project.version)
+//	}
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+//			artifact sourcesJar
+//			artifact javadocJar
+		}
+	}
+}

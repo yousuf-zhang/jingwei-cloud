@@ -1,0 +1,11 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven { url 'https://maven.aliyun.com/repository/public/' }
+        mavenCentral()
+        mavenLocal()
+        maven { url 'http://localhost:8081/repository/maven-public/' }
+    }
+}
+rootProject.name = 'sparrow-example'
+
