@@ -1,0 +1,8 @@
+dependencies {
+    compile project(":sparrow:sparrow-core")
+    compile 'org.springframework.boot:spring-boot-starter-cache'
+    compileOnly 'com.github.ben-manes.caffeine:caffeine'
+    compileOnly 'com.fasterxml.jackson.core:jackson-databind'
+    compileOnly 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    compileOnly 'org.springframework.boot:spring-boot-starter-data-redis'
+}

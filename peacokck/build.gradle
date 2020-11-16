@@ -1,0 +1,6 @@
+description = "peacokck(孔雀), 微服务网关模块"
+allprojects {
+    group = 'com.vastmoon.peacokck'
+    version = '0.0.1-SNAPSHOT'
+}
+

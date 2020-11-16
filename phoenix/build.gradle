@@ -1,0 +1,6 @@
+description = "phoenix(凤凰) 应用服务模块"
+allprojects {
+    group = 'com.vastmoon.phoenix'
+    version = '0.0.1-SNAPSHOT'
+}
+

@@ -1,0 +1,33 @@
+server:
+  port: 8001
+  servlet:
+    context-path: /register
+spring:
+  application:
+    name: peacock-register
+  jackson:
+    default-property-inclusion: non_empty
+    #    property-naming-strategy: SNAKE_CASE
+    deserialization:
+      fail_on_unknown_properties: false
+    mapper:
+      use_getters_as_setters: false
+    parser:
+      allow_single_quotes: false
+      allow_unquoted_control_chars: true
+    serialization:
+      fail_on_empty_beans: false
+  security:
+    user:
+      name: admin
+      password: 123456
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    instance-info-replication-interval-seconds: 30
+    serviceUrl:
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:${server.port}${server.servlet.context-path}/eureka/

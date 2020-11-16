@@ -52,14 +52,15 @@ configure(moduleProjects - excludeProjects) {
     }
 
     dependencies {
-        implementation(enforcedPlatform(project(":sparrow:sparrow-parent")))
+        implementation(platform(project(":sparrow:sparrow-parent")))
         annotationProcessor 'org.projectlombok:lombok'
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
         testImplementation('org.springframework.boot:spring-boot-starter-test') {
             exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
         }
-        implementation("org.springframework.boot:spring-boot-starter-validation")
+        compileOnly("org.springframework.boot:spring-boot-starter-web")
+        compileOnly("org.springframework.boot:spring-boot-starter-validation")
         implementation("org.apache.commons:commons-collections4")
         implementation("cn.hutool:hutool-all")
         implementation("org.apache.commons:commons-lang3")

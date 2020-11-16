@@ -1,0 +1,4 @@
+apply plugin: "org.springframework.boot"
+dependencies {
+    implementation project(":woodpechker:woodpechker-user-center:user-center-infrastructure")
+}

@@ -1,0 +1,5 @@
+description = "eagle(鹰), 微服务监控模块"
+allprojects {
+    group = 'com.vastmoon.eagle'
+    version = '0.0.1-SNAPSHOT'
+}

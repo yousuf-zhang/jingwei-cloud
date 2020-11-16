@@ -1,0 +1,6 @@
+description = "woodpechker(啄木鸟), Idaas（应用身份服务）"
+allprojects {
+    group = 'com.vastmoon.woodpechker'
+    version = '0.0.1-SNAPSHOT'
+}
+

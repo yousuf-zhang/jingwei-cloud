@@ -1,0 +1,4 @@
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.vastmoon.sparrow.cache.config.SparrowRedisCacheAutoConfiguration,\
+com.vastmoon.sparrow.cache.config.SparrowCaffeineCacheAutoConfiguration

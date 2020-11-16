@@ -4,25 +4,29 @@ apply plugin: 'java-platform'
 apply from: "$rootDir/gradle/publications.gradle"
 ext {
     set('springCloudAlibabaVersion', "2.2.2.RELEASE")
-    set('springCloudVersion', "Hoxton.SR8")
+    set('springCloudVersion', "Hoxton.SR9")
     set("collections4Version", "4.4")
+    set("lang3Version", "3.11")
     set("hutoolVersion", "5.4.7")
     set("ulisesbocchioVersion", "3.0.3")
     set("springSecurityJwtVersion", "1.1.1.RELEASE")
+    set("mapstructVersion", "1.4.1.Final")
 }
 javaPlatform {
     allowDependencies()
 }
 
 dependencies {
-    api enforcedPlatform(SpringBootPlugin.BOM_COORDINATES)
-    api enforcedPlatform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
-    api enforcedPlatform("com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}")
+    api platform(SpringBootPlugin.BOM_COORDINATES)
+    api platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
+    api platform("com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}")
     constraints {
         api("org.apache.commons:commons-collections4:$collections4Version")
         api("cn.hutool:hutool-all:$hutoolVersion")
         api("com.github.ulisesbocchio:jasypt-spring-boot:$ulisesbocchioVersion")
-        api('org.springframework.security:spring-security-jwt:$springSecurityJwtVersion')
+        api("org.springframework.security:spring-security-jwt:$springSecurityJwtVersion")
+        api("org.apache.commons:commons-lang3:$lang3Version")
+        api("org.mapstruct:mapstruct:$mapstructVersion")
     }
 
 }
