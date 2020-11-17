@@ -5,6 +5,10 @@ server:
 spring:
   application:
     name: peacock-register
+  security:
+    user:
+      name: admin
+      password: 123456
   jackson:
     default-property-inclusion: non_empty
     #    property-naming-strategy: SNAKE_CASE
@@ -17,10 +21,6 @@ spring:
       allow_unquoted_control_chars: true
     serialization:
       fail_on_empty_beans: false
-  security:
-    user:
-      name: admin
-      password: 123456
 
 eureka:
   instance:
