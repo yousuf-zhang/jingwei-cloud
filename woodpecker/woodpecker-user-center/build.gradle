@@ -1,0 +1,53 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
+buildscript {
+    ext {
+        set("clientProjects", subprojects.findAll { it.name.endsWith("client") })
+    }
+}
+plugins {
+    id 'org.springframework.boot' version "$springBootVersion" apply false
+    id 'io.spring.dependency-management' version "$dependencyManagementVersion" apply false
+    id 'java'
+}
+subprojects {
+    apply plugin: "java"
+    apply plugin: 'io.spring.dependency-management'
+    sourceCompatibility = '1.8'
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+    test {
+        useJUnitPlatform()
+    }
+    dependencyManagement {
+        imports {
+            mavenBom SpringBootPlugin.BOM_COORDINATES
+        }
+        generatedPomCustomization {
+            enabled = false
+        }
+    }
+    dependencies {
+        implementation(enforcedPlatform(project(":sparrow:sparrow-parent")))
+        annotationProcessor 'org.projectlombok:lombok'
+        compileOnly 'org.projectlombok:lombok'
+    }
+}
+
+configure(subprojects - clientProjects) {
+    dependencies {
+        implementation("org.springframework.boot:spring-boot-starter-web")
+        implementation(project(":sparrow:sparrow-core"))
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+//        implementation("org.springframework.cloud:spring-cloud-starter-netflix-zuul")
+
+    }
+
+}
+

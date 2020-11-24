@@ -1,5 +1,0 @@
-apply plugin: "org.springframework.boot"
-dependencies {
-    implementation project(":sparrow:sparrow-security")
-    implementation project(":woodpechker:woodpechker-user-center:user-center-infrastructure")
-}

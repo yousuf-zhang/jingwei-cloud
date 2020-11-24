@@ -1,0 +1,27 @@
+plugins {
+    id 'org.springframework.boot' version "$springBootVersion"
+    id 'io.spring.dependency-management' version "$dependencyManagementVersion"
+    id 'java'
+}
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+test {
+    useJUnitPlatform()
+}
+dependencies {
+    implementation(platform(project(":sparrow:sparrow-parent")))
+    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+    implementation(project(":sparrow:sparrow-security"))
+    implementation project(":sparrow:sparrow-cache")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+}

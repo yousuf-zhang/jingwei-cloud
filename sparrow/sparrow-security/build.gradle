@@ -2,5 +2,4 @@ dependencies {
     compile project(":sparrow:sparrow-core")
     compile("org.springframework.cloud:spring-cloud-starter-oauth2")
     compile("org.springframework.cloud:spring-cloud-starter-security")
-    compile("org.springframework.security:spring-security-jwt")
 }
