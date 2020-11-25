@@ -9,12 +9,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * <p> ClassName: SubjectAttributeUserTokenConverter
- * <p> Description: 增加jwt内容
+ * <p> ClassName: SparrowTokenConverter
+ * <p> Description: 定制化jwt token
  *
  * @author yousuf 2020/11/24
  */
-public class SubjectAttributeUserTokenConverter extends DefaultUserAuthenticationConverter {
+public class SparrowTokenConverter extends DefaultUserAuthenticationConverter {
     @Override
     public Map<String, ?> convertUserAuthentication(Authentication authentication) {
         Map<String, Object> response = new LinkedHashMap<>();

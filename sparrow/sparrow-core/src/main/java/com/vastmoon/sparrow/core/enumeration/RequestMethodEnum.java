@@ -44,7 +44,7 @@ public enum RequestMethodEnum implements Enumerator<Integer> {
      *
      * @param method 方法
      *
-     * @return com.vastmoon.sparrow.enums.RequestMethodEnum
+     * @return com.vastmoon.com.vastmoon.sparrow.enums.RequestMethodEnum
      *
      * @author yousuf 2020/3/3
      *

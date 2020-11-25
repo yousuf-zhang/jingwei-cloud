@@ -1,0 +1,6 @@
+dependencies {
+    compile project(':sparrow:sparrow-core')
+    compile 'cn.hutool:hutool-all'
+    compileOnly 'org.springframework.boot:spring-boot-starter-web'
+    compile 'com.github.ulisesbocchio:jasypt-spring-boot'
+}

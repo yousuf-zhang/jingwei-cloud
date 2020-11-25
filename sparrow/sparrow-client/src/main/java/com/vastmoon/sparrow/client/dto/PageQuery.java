@@ -40,7 +40,7 @@ public class PageQuery implements BaseDTO {
      * <p> Title: orderDesc
      * <p> Description: 获取排序
      *
-     * @return java.util.List<com.vastmoon.sparrow.dto.OrderDesc>
+     * @return java.util.List<com.vastmoon.com.vastmoon.sparrow.dto.OrderDesc>
      *
      * @author yousuf 2020/9/4
      *

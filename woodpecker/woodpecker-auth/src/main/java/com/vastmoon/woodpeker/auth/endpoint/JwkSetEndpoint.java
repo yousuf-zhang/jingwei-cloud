@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  * <p> ClassName: JwkSetEndpoint
- * <p> Description: jwk
+ * <p> Description: jwks
  *
  * @author yousuf 2020/11/24
  */

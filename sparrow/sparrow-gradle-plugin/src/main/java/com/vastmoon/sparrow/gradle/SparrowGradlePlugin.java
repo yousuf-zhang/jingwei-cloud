@@ -11,7 +11,7 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin;
  * @author yousuf 2020/11/11
  */
 public class SparrowGradlePlugin implements Plugin<Project> {
-    public static final String BOM_COORDINATES = "com.vastmoon.sparrow:sparrow-dependencies:";
+    public static final String BOM_COORDINATES = "com.vastmoon.com.vastmoon.sparrow:com.vastmoon.sparrow-dependencies:";
     @Override
     public void apply(Project project) {
         project.getPlugins().apply(SpringBootPlugin.class);

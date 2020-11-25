@@ -2,6 +2,8 @@ server:
   port: 8101
 
 spring:
+  profiles:
+    active: dev
   application:
     name: woodpecker-auth
   jackson:
@@ -27,3 +29,16 @@ eureka:
     registry-fetch-interval-seconds: 3
     serviceUrl:
       defaultZone: http://admin:123456@localhost:8001/register/eureka/
+---
+spring:
+  profiles: dev
+
+vastmoon:
+  rsa:
+    enabled: true
+    private-key-path: classpath:/rsa/rsa_private_key.der
+    public-key-path: classpath:/rsa/rsa_public_key.der
+    key-format: der
+jasypt:
+  encryptor:
+    private-key-location: classpath:/rsa/rsa_private_key.der

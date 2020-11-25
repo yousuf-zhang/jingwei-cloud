@@ -1,34 +1,22 @@
 package com.vastmoon.woodpeker.auth.config;
 
-import com.vastmoon.woodpeker.auth.converter.SubjectAttributeUserTokenConverter;
+import com.vastmoon.woodpeker.auth.converter.SparrowTokenConverter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
-import org.springframework.security.crypto.keys.KeyManager;
-import org.springframework.security.crypto.keys.StaticKeyGeneratingKeyManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
-import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
-import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
-import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 
 import java.security.KeyPair;
-import java.util.UUID;
 
 /**
  * <p> ClassName: AuthorizationServerConfig
@@ -42,7 +30,7 @@ import java.util.UUID;
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
     private final AuthenticationManager authenticationManager;
     private final KeyPair keyPair;
-    boolean jwtEnabled = true;
+    private final UserDetailsService userDetailsService;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients)
@@ -71,16 +59,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-        // @formatter:off
-        endpoints
-                .authenticationManager(this.authenticationManager)
-                .tokenStore(tokenStore());
-
-        if (this.jwtEnabled) {
-            endpoints
-                    .accessTokenConverter(accessTokenConverter());
-        }
-        // @formatter:on
+        endpoints.authenticationManager(this.authenticationManager)
+                .tokenStore(tokenStore())
+                .userDetailsService(userDetailsService)
+                .accessTokenConverter(accessTokenConverter());
     }
 
     @Override
@@ -90,22 +72,16 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Bean
     public TokenStore tokenStore() {
-        if (this.jwtEnabled) {
-            return new JwtTokenStore(accessTokenConverter());
-        } else {
-            return new InMemoryTokenStore();
-        }
+        return new JwtTokenStore(accessTokenConverter());
     }
 
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setKeyPair(this.keyPair);
-
         DefaultAccessTokenConverter accessTokenConverter = new DefaultAccessTokenConverter();
-        accessTokenConverter.setUserTokenConverter(new SubjectAttributeUserTokenConverter());
+        accessTokenConverter.setUserTokenConverter(new SparrowTokenConverter());
         converter.setAccessTokenConverter(accessTokenConverter);
-
         return converter;
     }
 

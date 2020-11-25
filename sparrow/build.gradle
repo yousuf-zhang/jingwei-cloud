@@ -1,4 +1,4 @@
-
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 buildscript {
     ext {
@@ -20,9 +20,9 @@ plugins {
     id 'io.spring.dependency-management' version "$dependencyManagementVersion" apply false
     id 'java'
 }
-description = "sparrow(麻雀), 基础工程，通用工程骨架"
+description = "com.vastmoon.sparrow(麻雀), 基础工程，通用工程骨架"
 allprojects {
-    group = 'com.vastmoon.sparrow'
+    group = 'com.vastmoon.com.vastmoon.sparrow'
     version = '2.0.0-SNAPSHOT'
 }
 
@@ -44,7 +44,7 @@ configure(moduleProjects - excludeProjects) {
     apply plugin: "io.spring.dependency-management"
     dependencyManagement {
         imports {
-            mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+            mavenBom SpringBootPlugin.BOM_COORDINATES
         }
         generatedPomCustomization {
             enabled = false

@@ -23,8 +23,8 @@ dependencies {
 
     implementation(project(":sparrow:sparrow-security"))
     implementation project(":sparrow:sparrow-cache")
-    implementation("org.springframework.security.experimental:spring-security-oauth2-authorization-server")
-    implementation("org.springframework.cloud:spring-cloud-starter-config")
+    implementation(project(":sparrow:sparrow-crypto"))
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.apache.commons:commons-collections4")

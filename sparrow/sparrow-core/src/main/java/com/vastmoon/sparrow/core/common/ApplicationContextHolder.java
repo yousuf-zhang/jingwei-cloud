@@ -1,47 +1,32 @@
 package com.vastmoon.sparrow.core.common;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Service;
 
 import java.lang.annotation.Annotation;
 import java.util.Map;
 
 /**
- * <p> ClassName: ApplicationContextHelper
+ * <p> ClassName: ApplicationContextHolder
  * <p> Description: springContext辅助类
  *
  * @author zhangshuai 2019/12/6
  */
-public class ApplicationContextHelper implements ApplicationContextAware {
-    private static ApplicationContext applicationContext;
-    private static BeanDefinitionRegistry beanDefinitionRegistry;
-
-    /**
-     * <p> Title: registerBean
-     * <p> Description: 手动注册bean到spring容器
-     *
-     * @param beanName beanName
-     * @param clazz 类
-     *
-     * @author zhangshuai 2019/11/6
-     *
-     */
-    @SuppressWarnings("rawtypes")
-    public synchronized static void registerBean(String beanName, Class clazz) {
-        if (null == beanName || null == clazz) {
-            throw new RuntimeException(beanName + "注册失败");
-        }
-        BeanDefinition beanDefinition = getBeanDefinitionBuilder(clazz).getBeanDefinition();
-        if (!beanDefinitionRegistry.containsBeanDefinition(beanName)) {
-            beanDefinitionRegistry.registerBeanDefinition(beanName, beanDefinition);
-        }
-    }
+@Slf4j
+@Service
+@Lazy(false)
+public class ApplicationContextHolder implements ApplicationContextAware, DisposableBean {
+    private static ApplicationContext applicationContext = null;
 
     @SuppressWarnings("rawtypes")
     private static BeanDefinitionBuilder getBeanDefinitionBuilder(Class clazz) {
@@ -64,9 +49,14 @@ public class ApplicationContextHelper implements ApplicationContextAware {
     @SuppressWarnings("NullableProblems")
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        ApplicationContextHelper.applicationContext = applicationContext;
-        ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext) applicationContext;
-        beanDefinitionRegistry = (BeanDefinitionRegistry) configurableApplicationContext.getBeanFactory();
+        ApplicationContextHolder.applicationContext = applicationContext;
+    }
+
+    public static void clearHolder() {
+        if (log.isDebugEnabled()) {
+            log.debug("清除SpringContextHolder中的ApplicationContext:" + applicationContext);
+        }
+        applicationContext = null;
     }
 
     /**
@@ -141,5 +131,10 @@ public class ApplicationContextHelper implements ApplicationContextAware {
      */
     public static Map<String, Object> getBeanMapByAnnotation(Class<? extends Annotation> annotationClz) {
         return applicationContext.getBeansWithAnnotation(annotationClz);
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        ApplicationContextHolder.clearHolder();
     }
 }

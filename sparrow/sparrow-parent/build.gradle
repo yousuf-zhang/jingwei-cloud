@@ -1,10 +1,10 @@
-
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 apply plugin: 'java-platform'
 apply from: "$rootDir/gradle/publications.gradle"
 ext {
-//    set('springCloudAlibabaVersion', "2.2.2.RELEASE")
-    set('springCloudVersion', "2020.0.0-M5")
+    set('springCloudAlibabaVersion', "2.2.2.RELEASE")
+    set('springCloudVersion', "Hoxton.SR9")
     set("collections4Version", "4.4")
     set("lang3Version", "3.11")
     set("hutoolVersion", "5.4.7")
@@ -18,9 +18,9 @@ javaPlatform {
 }
 
 dependencies {
-    api platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+    api platform(SpringBootPlugin.BOM_COORDINATES)
     api platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
-//    api platform("com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}")
+    api platform("com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}")
     constraints {
         api("org.apache.commons:commons-collections4:$collections4Version")
         api("cn.hutool:hutool-all:$hutoolVersion")
@@ -28,7 +28,7 @@ dependencies {
         api("org.apache.commons:commons-lang3:$lang3Version")
         api("org.mapstruct:mapstruct:$mapstructVersion")
         api("com.google.guava:guava:$guavaVersion")
-        api("org.springframework.security.experimental:spring-security-oauth2-authorization-server:$oauth2AuthorizationServerVersion")
+//        api("org.springframework.security.experimental:spring-security-oauth2-authorization-server:$oauth2AuthorizationServerVersion")
 
     }
 
