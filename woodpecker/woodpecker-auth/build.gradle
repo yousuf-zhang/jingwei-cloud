@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version "$springBootVersion"
     id 'io.spring.dependency-management' version "$dependencyManagementVersion"
     id 'java'
+    id 'net.ltgt.apt' version '0.20'
 }
 configurations {
     compileOnly {
@@ -11,6 +12,7 @@ configurations {
 test {
     useJUnitPlatform()
 }
+apply plugin: 'net.ltgt.apt-idea'
 dependencies {
     implementation(platform(project(":sparrow:sparrow-parent")))
     annotationProcessor 'org.projectlombok:lombok'
@@ -24,8 +26,14 @@ dependencies {
     implementation(project(":sparrow:sparrow-security"))
     implementation project(":sparrow:sparrow-cache")
     implementation(project(":sparrow:sparrow-crypto"))
+    implementation(project(":sparrow:sparrow-data-jpa"))
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("org.apache.commons:commons-collections4")
+    implementation("org.apache.commons:commons-lang3")
+    runtimeOnly 'mysql:mysql-connector-java'
+    implementation("org.mapstruct:mapstruct")
+    annotationProcessor 'org.mapstruct:mapstruct-processor'
 }

@@ -29,9 +29,36 @@ eureka:
     registry-fetch-interval-seconds: 3
     serviceUrl:
       defaultZone: http://admin:123456@localhost:8001/register/eureka/
+vastmoon:
+  cache:
+    redis:
+      configs:
+        - cache-name: oauth_client_details
+          key-prefix: "jingwei_cloud:oauth2:"
+          time-to-live: 15m
 ---
 spring:
   profiles: dev
+  datasource:
+    url: ENC(HQQTcOCvOabVMiJE5NsTpLzacCuOlMrZBy/twtjGpDOOKil3nyKMGShN85SIYqngPNW59Z85CMDTP+bv76q4lxvL2ZjbCiRd92cOFCBAMiRzBlt7B5m74wdXwC0PcLhx8/K97tK2dXyto6g0cD4YsuUnxMrCUAfqog0A2WEfbEbb72Q1fz9gyPtsUJjfFh0Gfk6xnttgBR1rv0hjIrE9B60QGNeK7sZrDY9RBv6ot4dto1QLPaaW8lrFtUrqC4HcmMUVAM1P9u3DsXM/jlPmHO0E7QdDK0prXc9I9PvVZDuiaZFzUKHmmT8W7XhSW4/UPC7w50A4vXqvQYd3w7fd1A==)
+    username: ENC(KzJ1sItHOHrJRlltkdLur7jPPYsTLe+gdrXq9lqute/LbQOL4aar+HH+TqlxY8DH3SdepugA1MlWV74GcXAB+mYm0MrXEjA3nFKEZoBqTY4XjdPQqlYXyFQIoS/ESEx8gzZxYP2i/X9MRQ30dFPj8cARmbHw3GNgMMjs/FqYlkYTOU1P6FQ6gRCyaBAXE+dl974r6jLrL+hGXvpPKkNBFTmSX8MYuODVKZU3FpV700Pq7tOQPB8z7dQ/gSSYGf+tzaEpj+Jqsf+oqO34DqsPNovCNyuvIqr4NNDUDCTWJIOy+bmD29u9CsLYvQWXv2xT6GCgDCr1JVK8GV33j4S9Cw==)
+    password: ENC(UiV2P25Ot/0KOp/ujQfDSiMZfvaxtQ1V6LWiUYzVhpLfFLovYVAtvJRlLDyNc/zaC3+kk+5WXbWqo2bbvUfSOK/3BISiV+pToQRxNqaOBUyPYwkk/ge1wPnH8obQ3zTDLCVlC8GwCuLpiaZnfOYTw2sGFQkKdCySrfjZYupxxP5a2lg3qBmDv1jLExktsI7hRGAHUJ+gEVO+8ufTqe2OvpPQeP3kUxuksQ7ZybmSYNUWF/AT/LX7hncug7T4/oCmiAiWaLAUhPalto/Js2ui6BJ3QLtG17cB72HwmSJQlCKVpsWa0Gs6yOslM1s5Wi3QIYmLniIZn3o96kNFJj9w9g==)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 20
+      connection-test-query: SELECT 1
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      pool-name: DatebookHikariC
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    open-in-view: true
+    properties:
+      hibernate:
+        format_sql: true
 
 vastmoon:
   rsa:

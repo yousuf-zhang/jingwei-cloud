@@ -44,4 +44,6 @@ include 'phoenix:phoenix-third-party:okta-oauth'
 findProject(':phoenix:phoenix-third-party:okta-oauth')?.name = 'okta-oauth'
 include 'sparrow:sparrow-crypto'
 findProject(':sparrow:sparrow-crypto')?.name = 'sparrow-crypto'
+include 'sparrow:sparrow-data-jpa'
+findProject(':sparrow:sparrow-data-jpa')?.name = 'sparrow-data-jpa'
 

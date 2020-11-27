@@ -27,6 +27,7 @@ dependencies {
         api("com.github.ulisesbocchio:jasypt-spring-boot:$ulisesbocchioVersion")
         api("org.apache.commons:commons-lang3:$lang3Version")
         api("org.mapstruct:mapstruct:$mapstructVersion")
+        api("org.mapstruct:mapstruct-processor:$mapstructVersion")
         api("com.google.guava:guava:$guavaVersion")
 //        api("org.springframework.security.experimental:spring-security-oauth2-authorization-server:$oauth2AuthorizationServerVersion")
 

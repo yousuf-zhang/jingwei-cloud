@@ -3,6 +3,8 @@ package com.vastmoon.woodpecker.usercenter.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
+
 /**
  * <p> ClassName: TestController
  * <p> Description: 测试
@@ -12,9 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
-    @GetMapping("/test")
-    public String test(String code) {
-        System.out.println(code);
-        return code;
+    @GetMapping("user")
+    public Principal currentUser(Principal principal) {
+        return principal;
     }
 }
