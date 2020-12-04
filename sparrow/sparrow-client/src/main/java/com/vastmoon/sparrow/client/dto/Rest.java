@@ -31,13 +31,6 @@ public interface Rest<T> extends BaseDTO {
     void setMessage(String message);
 
     /**
-     * Sets identifier.
-     *
-     * @param identifier 标识
-     */
-    void setIdentifier(String identifier);
-
-    /**
      * Sets error.
      *
      * @param error 错误原因 一般用于参数校验

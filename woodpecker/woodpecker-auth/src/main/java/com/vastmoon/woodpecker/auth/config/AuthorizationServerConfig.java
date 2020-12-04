@@ -1,5 +1,6 @@
 package com.vastmoon.woodpecker.auth.config;
 
+import com.vastmoon.sparrow.security.translator.SparrowWebResponseExceptionTranslator;
 import com.vastmoon.woodpecker.auth.converter.SparrowTokenConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         endpoints.authenticationManager(this.authenticationManager)
                 .tokenStore(tokenStore())
                 .userDetailsService(userDetailsService)
-                .accessTokenConverter(accessTokenConverter());
+                .accessTokenConverter(accessTokenConverter())
+                .exceptionTranslator(new SparrowWebResponseExceptionTranslator());
     }
 
     @Override

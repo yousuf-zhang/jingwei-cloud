@@ -16,7 +16,17 @@ spring:
       allow_unquoted_control_chars: true
     serialization:
       fail_on_empty_beans: false
-
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8301/auth
+          jwk-set-uri: http://localhost:8301/auth/.well-known/jwks.json
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
 eureka:
   instance:
     lease-renewal-interval-in-seconds: 20
@@ -32,4 +42,3 @@ security:
   oauth2:
     resource:
       id: ${spring.application.name}
-      user-info-uri: http://localhost:8301/auth/user

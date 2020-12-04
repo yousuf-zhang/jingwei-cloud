@@ -1,17 +1,23 @@
 package com.vastmoon.sparrow.cache.config;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.vastmoon.sparrow.cache.redis.FlexibleRedisProperties;
+import com.vastmoon.sparrow.cache.redis.RedisItemConfigAware;
 import com.vastmoon.sparrow.cache.redis.RedisManager;
 import com.vastmoon.sparrow.cache.redis.RedisObjectMapperWrapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -28,6 +34,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * <p> ClassName: RedisCacheAutoConfiguration
@@ -39,8 +47,8 @@ import java.util.Map;
 @Configuration
 @ConditionalOnClass(value = RedisCacheManager.class)
 @EnableConfigurationProperties(CacheProperties.class)
-public class SparrowRedisCacheAutoConfiguration extends CachingConfigurerSupport {
-
+public class SparrowRedisCacheAutoConfiguration extends CachingConfigurerSupport implements ApplicationContextAware {
+    private ApplicationContext applicationContext;
     @Bean(RedisObjectMapperWrapper.BEAN_NAME)
     @ConditionalOnMissingBean(name = RedisObjectMapperWrapper.BEAN_NAME)
     public RedisObjectMapperWrapper redisObjectMapperWrapper() {
@@ -77,6 +85,7 @@ public class SparrowRedisCacheAutoConfiguration extends CachingConfigurerSupport
                                           RedisObjectMapperWrapper redisMapperWrapper) {
         // 生成一个默认配置，通过config对象即可对缓存进行自定义配置
         Map<String, RedisCacheConfiguration> redisMap = Maps.newHashMap();
+        postRedisItemConfigs(cacheProperties.getRedis());
         List<FlexibleRedisProperties.RedisItemConfig> properties = cacheProperties.getRedis().getConfigs();
         if(CollectionUtils.isEmpty(properties)) {
             properties = FlexibleRedisProperties.defaultCache().getConfigs();
@@ -111,5 +120,31 @@ public class SparrowRedisCacheAutoConfiguration extends CachingConfigurerSupport
     @ConditionalOnBean(name = "redisTemplate")
     public RedisManager redisManager(RedisTemplate<String, Object> redisTemplate) {
         return new RedisManager(redisTemplate);
+    }
+
+    @Override
+    @SuppressWarnings("NullableProblems")
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
+    /**
+     * Description: 支持通过接口配置redis缓存
+     *
+     * @param redisProperties redis配置项
+     *
+     * @author yousuf 2020/12/1
+     *
+     */
+    private void postRedisItemConfigs(FlexibleRedisProperties redisProperties) {
+        Map<String, FlexibleRedisProperties.RedisItemConfig> propertiesMap = redisProperties.getConfigs().stream().
+                collect(Collectors.toMap(FlexibleRedisProperties.RedisItemConfig::getCacheName,
+                        redisItemConfig -> redisItemConfig));
+        Map<String, RedisItemConfigAware> redisItemConfigAwareMap = applicationContext.getBeansOfType(RedisItemConfigAware.class);
+        redisItemConfigAwareMap.forEach((key, redisItemConfigAware) -> {
+            String cacheName = redisItemConfigAware.redisProperties().getCacheName();
+            if (Objects.isNull(propertiesMap.get(cacheName))) {
+                redisProperties.addItem(redisItemConfigAware.redisProperties());
+            }
+        });
     }
 }

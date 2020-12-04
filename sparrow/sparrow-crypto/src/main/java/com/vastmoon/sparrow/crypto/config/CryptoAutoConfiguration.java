@@ -1,9 +1,8 @@
 package com.vastmoon.sparrow.crypto.config;
 
-import com.vastmoon.sparrow.crypto.aes.AesHelper;
-import com.vastmoon.sparrow.crypto.aes.AesKeyService;
-import com.vastmoon.sparrow.crypto.aes.DefaultAesKeyServiceImpl;
-import com.vastmoon.sparrow.crypto.rsa.RsaHelper;
+import com.vastmoon.sparrow.crypto.aes.AESManager;
+import com.vastmoon.sparrow.crypto.aes.AESKeyService;
+import com.vastmoon.sparrow.crypto.rsa.RSAManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -24,25 +23,27 @@ import org.springframework.context.annotation.DependsOn;
 public class CryptoAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
-    @ConditionalOnProperty(prefix = "vastmoon.rsa", name = "enabled", havingValue = "true")
-    public RsaHelper rsaHelper(CryptoProperties properties) {
-        log.info("init default RsaHelper");
-        return new RsaHelper(properties.getRsa());
+    public RSAManager rsaManager(CryptoProperties properties) {
+        log.info("init default RSAManager");
+        return new RSAManager(properties.getRsa());
     }
 
     @Bean
     @ConditionalOnMissingBean
-    @DependsOn("aesKeyService")
-    public AesHelper aesHelper(CryptoProperties properties, AesKeyService aesKeyService) {
+    @DependsOn(AESKeyService.AES_KEY_SERVICE_NAME)
+    public AESManager aesManager(CryptoProperties properties, AESKeyService aesKeyService) {
         log.info("init default AesHelper");
-        return new AesHelper(properties.getAes(), aesKeyService);
+        return new AESManager(properties.getAes(), aesKeyService);
     }
 
-    @Bean(name = AesKeyService.AES_KEY_SERVICE_NAME)
+    @Bean(name = AESKeyService.AES_KEY_SERVICE_NAME)
     @ConditionalOnMissingBean
-    public AesKeyService aesKeyService() {
+    public AESKeyService aesKeyService() {
         log.info("init default AesKeyService");
-        return new DefaultAesKeyServiceImpl();
+        return name -> {
+            log.info("默认实现" + name );
+            return null;
+        };
     }
 
 }

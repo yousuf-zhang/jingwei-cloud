@@ -2,6 +2,7 @@ package com.vastmoon.woodpecker.auth;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import com.vastmoon.sparrow.jpa.BaseRepositoryImpl;
+import com.vastmoon.sparrow.security.annotation.EnableSparrowResourceServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -18,6 +19,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableDiscoveryClient
 @SpringBootApplication
 @EnableEncryptableProperties
+@EnableSparrowResourceServer
 @EnableJpaRepositories(repositoryBaseClass = BaseRepositoryImpl.class)
 public class BootstrapApplication {
     public static void main(String[] args) {

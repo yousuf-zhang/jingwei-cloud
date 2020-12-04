@@ -17,7 +17,6 @@ public class RestBody<T> implements Rest<T> {
     private static final long serialVersionUID = 3450363750233658205L;
     private String code;
     private String message;
-    private String identifier;
     private T data;
     private Collection<ParamError> errors;
     private ParamError error;

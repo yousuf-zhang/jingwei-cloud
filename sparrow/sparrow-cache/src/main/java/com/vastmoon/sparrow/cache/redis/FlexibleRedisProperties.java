@@ -2,6 +2,7 @@ package com.vastmoon.sparrow.cache.redis;
 
 import com.google.common.collect.Lists;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotNull;
 import java.time.Duration;

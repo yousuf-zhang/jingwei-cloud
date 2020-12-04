@@ -1,7 +1,12 @@
 package com.vastmoon.sparrow.crypto.rsa;
 
 import com.ulisesbocchio.jasyptspringboot.util.AsymmetricCryptography;
-import lombok.Data;
+import lombok.*;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * <p> ClassName: RsaProperties
@@ -10,9 +15,9 @@ import lombok.Data;
  * @author yousuf 2020/2/26
  */
 @Data
-public class RsaProperties {
-    /**是否开启rsa 默认关闭*/
-    private boolean enabled = false;
+public class RSAProperties {
+    @NotEmpty
+    private String name;
     private String privateKeyPath;
     private String publicKeyPath;
     private AsymmetricCryptography.KeyFormat keyFormat = AsymmetricCryptography.KeyFormat.DER;

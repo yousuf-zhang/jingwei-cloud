@@ -1,10 +1,10 @@
 package com.vastmoon.sparrow.security.annotation;
 
-import com.vastmoon.sparrow.security.config.SparrowResourceServerAutoConfiguration;
 import com.vastmoon.sparrow.security.config.SparrowSecurityBeanDefinitionRegistrar;
+import com.vastmoon.sparrow.security.config.SparrowSecurityAutoConfig;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 import java.lang.annotation.*;
 
@@ -16,10 +16,11 @@ import java.lang.annotation.*;
  */
 @Documented
 @Inherited
-@EnableResourceServer
+@EnableWebSecurity
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-@Import({ SparrowResourceServerAutoConfiguration.class, SparrowSecurityBeanDefinitionRegistrar.class })
+@Import({ SparrowSecurityAutoConfig.class, SparrowSecurityBeanDefinitionRegistrar.class})
+
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public @interface EnableSparrowResourceServer {
 }

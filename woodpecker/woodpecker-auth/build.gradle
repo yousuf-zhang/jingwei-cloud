@@ -27,10 +27,11 @@ dependencies {
     implementation project(":sparrow:sparrow-cache")
     implementation(project(":sparrow:sparrow-crypto"))
     implementation(project(":sparrow:sparrow-data-jpa"))
-    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+    implementation("org.springframework.session:spring-session-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-aop")
+    implementation("org.springframework.boot:spring-boot-starter-freemarker")
     implementation("org.apache.commons:commons-collections4")
     implementation("org.apache.commons:commons-lang3")
     runtimeOnly 'mysql:mysql-connector-java'

@@ -21,7 +21,7 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
 
-    implementation(project(":sparrow:sparrow-security"))
+//    implementation(project(":sparrow:sparrow-security"))
     implementation project(":sparrow:sparrow-cache")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
 }

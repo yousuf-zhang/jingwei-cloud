@@ -1,5 +1,6 @@
 package com.vastmoon.woodpecker.auth.converter;
 
+import com.vastmoon.sparrow.client.dto.SuccessCode;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;

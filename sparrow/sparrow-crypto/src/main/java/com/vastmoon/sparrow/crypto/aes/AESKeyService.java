@@ -10,18 +10,19 @@ package com.vastmoon.sparrow.crypto.aes;
  *
  * @author yousuf 2020/2/26
  */
-public interface AesKeyService {
+public interface AESKeyService {
     /**bean name*/
-    String AES_KEY_SERVICE_NAME = "aesKeyService";
+    String AES_KEY_SERVICE_NAME = "AESKeyService";
     /**
      * <p> Title: findDataEncryptionKey
      * <p> Description: 获取数据加密秘钥
      *
+     * @param name key的名字
      *
      * @return java.lang.String 加密的 DEK
      *
      * @author yousuf 2020/2/26
      *
      */
-    AesKeyStore findDataEncryptionKey();
+    AESStore findAESKey(String name);
 }
